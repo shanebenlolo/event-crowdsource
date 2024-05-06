@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import {
   EventItem,
   EventSummary as EventSummaryItem,
-  EventImage,
 } from "event-crowdsource-client-sdk-2";
 import { mockEvents, mockEventsSummaries } from "./mockData/EventsList";
 
@@ -14,7 +13,7 @@ app.use(express.json());
 
 // MongoDB Connection
 const mongoURI =
-  "mongodb://admin:password@localhost:27017/eventDB?authSource=admin";
+  "mongodb://admin:password@database:27017/eventDB?authSource=admin";
 mongoose
   .connect(mongoURI)
   .then(() => {
