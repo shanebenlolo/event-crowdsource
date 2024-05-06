@@ -1,0 +1,11 @@
+create 2 users: investor and host
+create event page
+invest page
+Sqaure integration
+
+Low priority:
+CDK
+AWS cognito + amplify UI for JWT
+
+0 priotity:
+tests :D 

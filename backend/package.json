@@ -1,0 +1,31 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon",
+    "build": "tsc",
+    "serve": "node dist/server.js",
+    "generate-client": "openapi-generator-cli generate -i ./spec.yaml -g typescript-fetch -o ../client-sdk"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "event-crowdsource-client-sdk-2": "^1.0.39",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.3",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.13.4",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.12.8",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}

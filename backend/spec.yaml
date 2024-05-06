@@ -1,0 +1,109 @@
+openapi: 3.0.3
+info:
+  title: Event API
+  description: API to manage event data for the Event Crowdsource application.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3001/api
+paths:
+  /event-summaries:
+    get:
+      summary: List all event summaries
+      operationId: listEventSummaries
+      responses:
+        "200":
+          description: An array of event summaries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EventSummary"
+  /events/{id}:
+    get:
+      summary: Get a single event by ID
+      operationId: getEventById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A detailed view of an event
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventItem"
+        "404":
+          description: Event not found
+components:
+  schemas:
+    EventItem:
+      type: object
+      properties:
+        id:
+          type: string
+        summary:
+          type: string
+        details:
+          $ref: "#/components/schemas/EventDetails"
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/EventImage"
+    EventSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        image:
+          $ref: "#/components/schemas/EventImage"
+    EventImage:
+      type: object
+      properties:
+        src:
+          type: string
+        alt:
+          type: string
+    EventDetails:
+      type: object
+      properties:
+        eventName:
+          type: string
+        eventDate:
+          type: string
+          format: date-time
+        deadline:
+          type: string
+          format: date-time
+        goal:
+          type: integer
+        amountRaised:
+          type: integer
+        host:
+          $ref: "#/components/schemas/Host"
+        location:
+          type: string
+        category:
+          $ref: "#/components/schemas/EventCategory"
+    Host:
+      type: object
+      properties:
+        name:
+          type: string
+        rating:
+          type: string
+    EventCategory:
+      type: string
+      enum:
+        - Music
+        - Conference
+        - Workshop
+        - Sports
+        - Festival

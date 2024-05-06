@@ -1,0 +1,7 @@
+../client-sdk/.openapi-generator
+../client-sdk/apis
+../client-sdk/models
+../client-sdk/index.ts
+../client-sdk/runtime.ts
+
+# DO NOT ADD dist here

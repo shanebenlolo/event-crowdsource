@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  mongo:
+    container_name: mongo
+    build: ./database
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - ./database/mongo/data:/data/db #Helps to store MongoDB data in `./mongo/data`
+
+volumes:
+  mongo-data:

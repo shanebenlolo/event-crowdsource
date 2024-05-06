@@ -1,0 +1,8 @@
+dev:
+
+- npm start
+
+update client:
+
+- nvm use v20.11.0
+- bash ./generate-client.sh
