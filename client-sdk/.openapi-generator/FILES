@@ -7,5 +7,7 @@ models/EventImage.ts
 models/EventItem.ts
 models/EventSummary.ts
 models/Host.ts
+models/PaymentRequest.ts
+models/PaymentResponse.ts
 models/index.ts
 runtime.ts

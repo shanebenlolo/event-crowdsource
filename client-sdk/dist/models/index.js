@@ -18,3 +18,5 @@ __exportStar(require("./EventImage"), exports);
 __exportStar(require("./EventItem"), exports);
 __exportStar(require("./EventSummary"), exports);
 __exportStar(require("./Host"), exports);
+__exportStar(require("./PaymentRequest"), exports);
+__exportStar(require("./PaymentResponse"), exports);

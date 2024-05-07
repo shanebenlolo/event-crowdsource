@@ -10,8 +10,8 @@ const liveMusicEvent: EventItem = {
     "The Summer Beats Festival is a vibrant live music event held at the iconic Central Park Bandstand in New York City. This festival showcases a dynamic lineup of artists, ranging from well-known headliners to emerging indie bands, across multiple stages. With its focus on eclectic music genres, the festival provides a lively atmosphere that celebrates the spirit of summer. Beyond the music, attendees can enjoy a variety of food trucks, interactive art installations, and craft stalls, making it an all-encompassing cultural experience. The Summer Beats Festival aims to bring together music lovers from diverse backgrounds to enjoy performances under the open sky, fostering a sense of community and shared enjoyment.",
   details: {
     eventName: "Summer Beats Festival",
-    eventDate: new Date("2024-09-15T20:00:00"), // Event date and time
-    deadline: new Date("2024-08-30T23:59:59"), // Deadline for raising funds
+    eventDate: new Date("2024-09-15T20:00:00").toISOString(), // Event date and time
+    deadline: new Date("2024-08-30T23:59:59").toISOString(), // Deadline for raising funds
     goal: 10000, // Goal amount to raise in USD
     amountRaised: 7350, // Current amount raised in USD
     host: {
@@ -50,8 +50,8 @@ const videoGameTournament: EventItem = {
     "The Ultimate Gamer Challenge is a high-stakes video game tournament that attracts gamers from all skill levels. Set in the vibrant city of Las Vegas, this event offers participants the chance to compete in popular games for a chance to win substantial prizes. The tournament features a variety of gaming genres to ensure broad appeal, from strategic eSports battles to fast-paced action games. This event not only showcases individual and team gaming skills but also serves as a hub for gamers to network and share their passion for video gaming.",
   details: {
     eventName: "1-Up Expo",
-    eventDate: new Date("2024-06-21T12:00:00"), // Event date and time
-    deadline: new Date("2024-06-10T23:59:59"), // Deadline for registration
+    eventDate: new Date("2024-06-21T12:00:00").toISOString(), // Event date and time
+    deadline: new Date("2024-06-10T23:59:59").toISOString(), // Deadline for registration
     goal: 5000, // Goal amount to raise in USD
     amountRaised: 2500, // Current amount raised in USD
     host: {
@@ -79,8 +79,8 @@ const foodAndBeverageFestival: EventItem = {
     "Taste of the World Festival is a culinary extravaganza held in Denver's scenic Riverfront Park. This festival celebrates the diversity of culinary arts with food stalls from around the globe, offering attendees an opportunity to taste a wide range of dishes—from traditional to contemporary culinary creations. The event aims to bring together food lovers and chefs in a vibrant atmosphere filled with music and entertainment, making it a perfect family-friendly outing that caters to the taste buds of all ages.",
   details: {
     eventName: "Taste of the World Festival",
-    eventDate: new Date("2024-07-15T10:00:00"), // Event date and time
-    deadline: new Date("2024-07-01T23:59:59"), // Deadline for stall registrations
+    eventDate: new Date("2024-07-15T10:00:00").toISOString(), // Event date and time
+    deadline: new Date("2024-07-01T23:59:59").toISOString(), // Deadline for stall registrations
     goal: 15000, // Goal amount to raise in USD
     amountRaised: 10500, // Current amount raised in USD
     host: {
@@ -108,8 +108,8 @@ const techConference: EventItem = {
     "Innovate 2024 is a leading tech conference held in San Francisco, designed to inspire and educate attendees with the latest advancements in technology. The conference features keynotes, panels, and workshops led by prominent figures in the tech industry. It provides a platform for professionals, innovators, and entrepreneurs to connect, exchange ideas, and explore potential collaborations. The event covers a range of topics, from artificial intelligence and machine learning to cybersecurity and tech startups, aiming to foster innovation and drive industry forward.",
   details: {
     eventName: "Innovate 2024",
-    eventDate: new Date("2024-10-05T09:00:00"), // Event date and time
-    deadline: new Date("2024-09-20T23:59:59"), // Deadline for speaker applications
+    eventDate: new Date("2024-10-05T09:00:00").toISOString(), // Event date and time
+    deadline: new Date("2024-09-20T23:59:59").toISOString(), // Deadline for speaker applications
     goal: 20000, // Goal amount to raise in USD
     amountRaised: 18000, // Current amount raised in USD
     host: {
@@ -136,31 +136,4 @@ export const mockEvents: EventItem[] = [
   videoGameTournament,
   foodAndBeverageFestival,
   techConference,
-];
-
-export const mockEventsSummaries: EventSummary[] = [
-  {
-    id: mockEvents[0].id,
-    name: EventCategory[mockEvents[0].details!.category!],
-    description: mockEvents[0].details!.eventName,
-    image: mockEvents[0].images![0],
-  },
-  {
-    id: mockEvents[1].id,
-    name: EventCategory[mockEvents[1].details!.category!],
-    description: mockEvents[1].details!.eventName,
-    image: mockEvents[1].images![0],
-  },
-  {
-    id: mockEvents[2].id,
-    name: EventCategory[mockEvents[2].details!.category!],
-    description: mockEvents[2].details!.eventName,
-    image: mockEvents[2].images![0],
-  },
-  {
-    id: mockEvents[3].id,
-    name: EventCategory[mockEvents[3].details!.category!],
-    description: mockEvents[3].details!.eventName,
-    image: mockEvents[3].images![0],
-  },
 ];

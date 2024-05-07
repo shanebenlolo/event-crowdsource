@@ -25,16 +25,16 @@ export interface EventDetails {
     eventName?: string;
     /**
      *
-     * @type {Date}
+     * @type {string}
      * @memberof EventDetails
      */
-    eventDate?: Date;
+    eventDate?: string;
     /**
      *
-     * @type {Date}
+     * @type {string}
      * @memberof EventDetails
      */
-    deadline?: Date;
+    deadline?: string;
     /**
      *
      * @type {number}

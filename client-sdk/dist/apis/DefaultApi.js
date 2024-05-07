@@ -40,6 +40,32 @@ const index_1 = require("../models/index");
  */
 class DefaultApi extends runtime.BaseAPI {
     /**
+     * Create a new event
+     */
+    async createEventRaw(requestParameters, initOverrides) {
+        if (requestParameters['eventItem'] == null) {
+            throw new runtime.RequiredError('eventItem', 'Required parameter "eventItem" was null or undefined when calling createEvent().');
+        }
+        const queryParameters = {};
+        const headerParameters = {};
+        headerParameters['Content-Type'] = 'application/json';
+        const response = await this.request({
+            path: `/create-event`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: (0, index_1.EventItemToJSON)(requestParameters['eventItem']),
+        }, initOverrides);
+        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.EventItemFromJSON)(jsonValue));
+    }
+    /**
+     * Create a new event
+     */
+    async createEvent(requestParameters, initOverrides) {
+        const response = await this.createEventRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+    /**
      * Get a single event by ID
      */
     async getEventByIdRaw(requestParameters, initOverrides) {
@@ -82,6 +108,32 @@ class DefaultApi extends runtime.BaseAPI {
      */
     async listEventSummaries(initOverrides) {
         const response = await this.listEventSummariesRaw(initOverrides);
+        return await response.value();
+    }
+    /**
+     * Make a payment
+     */
+    async makePaymentRaw(requestParameters, initOverrides) {
+        if (requestParameters['paymentRequest'] == null) {
+            throw new runtime.RequiredError('paymentRequest', 'Required parameter "paymentRequest" was null or undefined when calling makePayment().');
+        }
+        const queryParameters = {};
+        const headerParameters = {};
+        headerParameters['Content-Type'] = 'application/json';
+        const response = await this.request({
+            path: `/make-payment`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: (0, index_1.PaymentRequestToJSON)(requestParameters['paymentRequest']),
+        }, initOverrides);
+        return new runtime.JSONApiResponse(response, (jsonValue) => (0, index_1.PaymentResponseFromJSON)(jsonValue));
+    }
+    /**
+     * Make a payment
+     */
+    async makePayment(requestParameters, initOverrides) {
+        const response = await this.makePaymentRaw(requestParameters, initOverrides);
         return await response.value();
     }
 }

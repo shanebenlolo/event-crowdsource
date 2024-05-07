@@ -5,7 +5,7 @@ import {
   EventItem,
   EventSummary as EventSummaryItem,
 } from "event-crowdsource-client-sdk-2";
-import { mockEvents, mockEventsSummaries } from "./mockData/EventsList";
+import { mockEvents } from "./mockData/EventsList";
 
 const app = express();
 app.use(cors());
@@ -29,41 +29,48 @@ const eventSchema = new mongoose.Schema<EventItem>({
   images: Array,
 });
 
-const eventSummarySchema = new mongoose.Schema<EventSummaryItem>({
-  id: String,
-  name: String,
-  description: String,
-  image: Object,
-});
-
 const Event = mongoose.model("Event", eventSchema);
-const EventSummary = mongoose.model("EventSummary", eventSummarySchema);
 
 // Seed data function
 async function initializeDatabase() {
   console.log("Clearing the existing data and re-seeding the database...");
   await Event.deleteMany({});
-  await EventSummary.deleteMany({});
 
   await Event.insertMany(mockEvents)
     .then(() => console.log("Event Database seeded!"))
     .catch((err) => console.log("Error seeding database:", err));
-
-  await EventSummary.insertMany(mockEventsSummaries)
-    .then(() => console.log("Event Summary Database seeded!"))
-    .catch((err) => console.log("Error seeding database:", err));
 }
 
-// Endpoint to get all events
+// Endpoint to create a new event
+app.post("/api/create-event", async (req: Request, res: Response) => {
+  try {
+    const newEvent = new Event(req.body);
+    await newEvent.save();
+    res.status(201).json(newEvent);
+  } catch (error) {
+    console.error("Error creating event:", error);
+    res.status(400).json({ message: "Error creating event", error });
+  }
+});
+
+// Endpoint to get all events as summaries
 app.get("/api/event-summaries", async (req: Request, res: Response) => {
-  const events = await EventSummary.find().lean();
-  res.json(events);
+  const events = await Event.find().lean();
+
+  const eventSummaries: EventSummaryItem[] = events.map((event) => ({
+    id: event._id.toString(),
+    name: event.details?.category!,
+    description: event.details?.eventName,
+    image: event.images![0],
+  }));
+
+  res.json(eventSummaries);
 });
 
 // Endpoint to get a single event by ID
 app.get("/api/events/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
-  const event = await Event.findOne({ id });
+  const event = await Event.findOne({ _id: id });
   if (event) {
     res.json(event);
   } else {

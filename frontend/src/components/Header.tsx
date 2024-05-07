@@ -1,4 +1,3 @@
-import "./App.css";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -66,7 +65,7 @@ export default function Header() {
           <a
             onClick={(e) => {
               e.preventDefault();
-              navigate("/");
+              navigate("/login");
             }}
             href="/login"
             className="text-sm font-semibold leading-6 text-gray-900"

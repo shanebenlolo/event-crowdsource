@@ -5,13 +5,12 @@ import { DefaultApi, EventSummary } from "event-crowdsource-client-sdk-2";
 export default function Events() {
   const navigate = useNavigate();
   const [events, setEvents] = useState<EventSummary[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const api = new DefaultApi();
     api.listEventSummaries().then((response) => {
+      console.log(response);
       setEvents(response);
-      setIsLoading(false);
     });
   }, []);
 

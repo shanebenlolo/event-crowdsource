@@ -1,11 +1,18 @@
-create 2 users: investor and host
-create event page
+finish create event
+start invest page (which will lead into square integ)
+
+High Priority:
+create event page (in progress)
 invest page
 Sqaure integration
 
 Low priority:
 CDK
 AWS cognito + amplify UI for JWT
+  - cognito returns JWT
+  - jwt is sent to backend to request access token for Sqaure
+  - backend returns access token
 
 0 priotity:
-tests :D 
+tests :D (jk, needed for regulation, part of MVP? Probably.) 
+ 

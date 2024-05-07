@@ -33,8 +33,8 @@ function EventDetailsFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'eventName': json['eventName'] == null ? undefined : json['eventName'],
-        'eventDate': json['eventDate'] == null ? undefined : (new Date(json['eventDate'])),
-        'deadline': json['deadline'] == null ? undefined : (new Date(json['deadline'])),
+        'eventDate': json['eventDate'] == null ? undefined : json['eventDate'],
+        'deadline': json['deadline'] == null ? undefined : json['deadline'],
         'goal': json['goal'] == null ? undefined : json['goal'],
         'amountRaised': json['amountRaised'] == null ? undefined : json['amountRaised'],
         'host': json['host'] == null ? undefined : (0, Host_1.HostFromJSON)(json['host']),
@@ -49,8 +49,8 @@ function EventDetailsToJSON(value) {
     }
     return {
         'eventName': value['eventName'],
-        'eventDate': value['eventDate'] == null ? undefined : ((value['eventDate']).toISOString()),
-        'deadline': value['deadline'] == null ? undefined : ((value['deadline']).toISOString()),
+        'eventDate': value['eventDate'],
+        'deadline': value['deadline'],
         'goal': value['goal'],
         'amountRaised': value['amountRaised'],
         'host': (0, Host_1.HostToJSON)(value['host']),

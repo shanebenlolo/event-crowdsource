@@ -4,3 +4,5 @@ export * from './EventImage';
 export * from './EventItem';
 export * from './EventSummary';
 export * from './Host';
+export * from './PaymentRequest';
+export * from './PaymentResponse';

@@ -1,6 +1,6 @@
 {
   "name": "event-crowdsource-client-sdk-2",
-  "version": "1.0.39",
+  "version": "1.0.46",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

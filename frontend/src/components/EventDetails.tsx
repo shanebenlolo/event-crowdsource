@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   DefaultApi,
@@ -11,14 +11,13 @@ type eventDetail = string | user | EventCategory | Date;
 
 export default function EventDetails() {
   const { eventId } = useParams();
+  const navigate = useNavigate();
   const [event, setEvent] = useState<EventItem | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const api = new DefaultApi();
     api.getEventById({ id: eventId! }).then((response) => {
       setEvent(response);
-      setIsLoading(false);
     });
   }, [eventId]);
 
@@ -51,7 +50,11 @@ export default function EventDetails() {
         </div>
       </div>
       <a
-        href="#"
+        onClick={(e) => {
+          e.preventDefault();
+          navigate("/user/investor");
+        }}
+        href="/user/investor"
         className="mt-4 w-full sm:w-auto sm:self-center rounded-md bg-gradient-to-r from-purple-500 to-pink-500 px-12 py-6 text-center font-medium text-xl text-white hover:from-purple-600 hover:to-pink-600 transition-colors"
       >
         Invest Now!
@@ -66,7 +69,7 @@ const Detail = (props: { label: string; value: eventDetail }) => {
     switch (label) {
       case "eventDate":
       case "deadline":
-        return (value as Date).toDateString();
+        return new Date(value as string).toDateString();
       case "goal":
       case "amountRaised":
         return value.toLocaleString();

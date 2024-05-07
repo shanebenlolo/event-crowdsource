@@ -17,22 +17,72 @@ import * as runtime from '../runtime';
 import type {
   EventItem,
   EventSummary,
+  PaymentRequest,
+  PaymentResponse,
 } from '../models/index';
 import {
     EventItemFromJSON,
     EventItemToJSON,
     EventSummaryFromJSON,
     EventSummaryToJSON,
+    PaymentRequestFromJSON,
+    PaymentRequestToJSON,
+    PaymentResponseFromJSON,
+    PaymentResponseToJSON,
 } from '../models/index';
+
+export interface CreateEventRequest {
+    eventItem: EventItem;
+}
 
 export interface GetEventByIdRequest {
     id: string;
+}
+
+export interface MakePaymentRequest {
+    paymentRequest: PaymentRequest;
 }
 
 /**
  * 
  */
 export class DefaultApi extends runtime.BaseAPI {
+
+    /**
+     * Create a new event
+     */
+    async createEventRaw(requestParameters: CreateEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<EventItem>> {
+        if (requestParameters['eventItem'] == null) {
+            throw new runtime.RequiredError(
+                'eventItem',
+                'Required parameter "eventItem" was null or undefined when calling createEvent().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/create-event`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: EventItemToJSON(requestParameters['eventItem']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EventItemFromJSON(jsonValue));
+    }
+
+    /**
+     * Create a new event
+     */
+    async createEvent(requestParameters: CreateEventRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<EventItem> {
+        const response = await this.createEventRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * Get a single event by ID
@@ -90,6 +140,42 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async listEventSummaries(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<EventSummary>> {
         const response = await this.listEventSummariesRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Make a payment
+     */
+    async makePaymentRaw(requestParameters: MakePaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaymentResponse>> {
+        if (requestParameters['paymentRequest'] == null) {
+            throw new runtime.RequiredError(
+                'paymentRequest',
+                'Required parameter "paymentRequest" was null or undefined when calling makePayment().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/make-payment`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PaymentRequestToJSON(requestParameters['paymentRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PaymentResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Make a payment
+     */
+    async makePayment(requestParameters: MakePaymentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaymentResponse> {
+        const response = await this.makePaymentRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

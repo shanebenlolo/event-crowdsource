@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "event-crowdsource-client-sdk-2": "^1.0.39",
+    "event-crowdsource-client-sdk-2": "^1.0.46",
     "express": "^4.19.2",
     "mongoose": "^8.3.3",
     "swagger-ui-express": "^5.0.0",
