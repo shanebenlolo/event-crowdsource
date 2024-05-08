@@ -72,7 +72,7 @@ const Detail = (props: { label: string; value: eventDetail }) => {
         return new Date(value as string).toDateString();
       case "goal":
       case "amountRaised":
-        return value.toLocaleString();
+        return value ? value : 0;
       case "host":
         return `${(value as user).name} - Rating: ${(value as user).rating}`; // Formats host object
       case "category":

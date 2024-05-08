@@ -10,27 +10,18 @@ import FormInput from "./FormInput";
 import Dropdown from "./Dropdown";
 import Datepicker, { DateValueType } from "react-tailwindcss-datepicker";
 import { useUser } from "../contexts/UserContext";
+import Autocomplete from "react-google-autocomplete";
+import Alert from "./Alert";
 
 export default function CreateEvent() {
   const initialEventState: EventItem = {
     images: [{ src: "", alt: "" }], // Initialize with one empty image slot
   };
-  const [event, setEvent] = useState<EventItem>(initialEventState);
   const { user } = useUser();
-
-  const [eventDates, setEventDates] = useState<DateValueType>();
-
-  const handleDateChange = (newValue: DateValueType) => {
-    if (!newValue!.startDate) return; // Ensure startDate is not null before setting it
-    setEventDates(newValue);
-    setEvent((prevEvent) => ({
-      ...prevEvent,
-      details: {
-        ...prevEvent.details,
-        eventDate: newValue!.startDate?.toString(),
-      },
-    }));
-  };
+  const [event, setEvent] = useState<EventItem>(initialEventState);
+  const [eventDate, setEventDate] = useState<DateValueType>();
+  const [deadline, setDeadline] = useState<DateValueType>();
+  const [eventCreated, setEventCreated] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -81,8 +72,8 @@ export default function CreateEvent() {
           },
         },
       })
-      .then((response) => {
-        console.log(response);
+      .then(() => {
+        setEventCreated(true);
       });
   };
 
@@ -127,6 +118,18 @@ export default function CreateEvent() {
             value={event.summary || ""}
             onChange={handleInputChange}
           />
+          <FormInput
+            label="Goal"
+            id="goal"
+            name="goal"
+            value={event.details?.goal || ""}
+            onChange={(e) => {
+              setEvent((prevEvent) => ({
+                ...prevEvent,
+                details: { ...prevEvent.details, goal: Number(e.target.value) },
+              }));
+            }}
+          />
           {event.images?.map((image, index) => (
             <React.Fragment key={index}>
               <FormInput
@@ -157,26 +160,76 @@ export default function CreateEvent() {
           />
 
           <label className="block text-sm font-bold text-gray-700">
-            Event Dates
+            Event Date
           </label>
           <Datepicker
             asSingle={true}
             value={
-              eventDates
-                ? eventDates
+              eventDate
+                ? eventDate
                 : ({
                     startDate: new Date(),
                     endDate: null,
                   } as any)
             }
-            onChange={handleDateChange}
+            onChange={(value) => {
+              setEventDate(value);
+              setEvent((prevEvent) => ({
+                ...prevEvent,
+                details: {
+                  ...prevEvent.details,
+                  eventDate: value!.startDate?.toString(),
+                },
+              }));
+            }}
             classNames={{
               input: () =>
                 "inline-flex justify-between w-full rounded-md bg-white px-4 py-2.5 text-sm font-medium text-gray-900 border border-gray-400 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 m",
             }}
           />
 
-          {/* STILL NEED GOAL, DEADLINE, LOCATION */}
+          <label className="block text-sm font-bold text-gray-700">
+            Fundraiser Deadline
+          </label>
+          <Datepicker
+            asSingle={true}
+            value={
+              deadline
+                ? deadline
+                : ({
+                    startDate: new Date(),
+                    endDate: null,
+                  } as any)
+            }
+            onChange={(value) => {
+              setDeadline(value);
+              setEvent((prevEvent) => ({
+                ...prevEvent,
+                details: {
+                  ...prevEvent.details,
+                  deadline: value!.startDate?.toString(),
+                },
+              }));
+            }}
+            classNames={{
+              input: () =>
+                "inline-flex justify-between w-full rounded-md bg-white px-4 py-2.5 text-sm font-medium text-gray-900 border border-gray-400 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 m",
+            }}
+          />
+
+          <Autocomplete
+            apiKey={"AIzaSyBqEI0XMzb7Bq-U5_CzxUWeDQgA6xK9UCY"}
+            onPlaceSelected={(value) => {
+              setEvent((prevEvent) => ({
+                ...prevEvent,
+                details: {
+                  ...prevEvent.details,
+                  location: value.formatted_address,
+                },
+              }));
+            }}
+            className="inline-flex justify-between w-full rounded-md bg-white px-4 py-2.5 text-sm font-medium text-gray-900 border border-gray-400 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 m"
+          />
           <button
             type="button"
             onClick={callCreateEvent}
@@ -184,6 +237,13 @@ export default function CreateEvent() {
           >
             Create Event
           </button>
+          {eventCreated && (
+            <Alert
+              type="success"
+              message="event successfully created!"
+              close={() => setEventCreated(false)}
+            />
+          )}
         </form>
       </div>
       <div
